@@ -1,0 +1,13 @@
+{
+  "name": "iods/php-bones",
+  "description": "An environment for PHP projects.",
+  "license": [
+    "MIT"
+  ],
+  "require": {
+    "monolog/monolog": "2.0.*"
+  },
+  "require-dev": {
+
+  }
+}
