@@ -1,12 +1,8 @@
-ARG VERSION
-FROM php:${VERSION}-fpm
+FROM php:7.4-fpm
 
 LABEL maintainer="containers@darksociety.cloud"
 
 ARG DEBIAN_FRONTEND=noninteractive
-ARG NODE
-ARG UID
-ARG USER
 
 COPY --from=mlocati/php-extension-installer /usr/bin/install-php-extensions /usr/local/bin/
 
@@ -21,22 +17,13 @@ RUN \
     install-php-extensions \
         bcmath \
         gd \
-        redis; \
+        redis \
+        xdebug; \
     apt-get clean \
     && rm -rf /var/lib/apt/lists/*
 
-RUN \
-    # curl -sL https://deb.nodesource.com/setup_14.x | bash - \
-    apt-get update \
-    && apt-get install -y \
-        nodejs-dev \
-        node-gyp \
-        libssl1.0-dev; \
-    apt-get install -y \
-        nodejs \
-        npm
 
-
+# Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/local/bin/composer
 
 ENV COMPOSER_ALLOW_SUPERUSER 1
@@ -45,11 +32,19 @@ ENV PATH bin:vendor/bin:$PATH
 
 RUN chmod +x /usr/local/bin/composer
 
-RUN \
-    useradd -G www-data,root -u ${UID} -d /home/${USER} ${USER}; \
-    mkdir -p /home/${USER}/.composer \
-    && chown -R ${USER}:${USER} /home/${USER}
+# Install Node and NPM
+RUN curl -fsSL https://deb.nodesource.com/setup_16.x | bash -
+RUN apt-get update && apt-get install nodejs
+# RUN npm i -g yarn
+
+
+# Configure PHP
+RUN cp $PHP_INI_DIR/php.ini-development $PHP_INI_DIR/php.ini
+COPY ./conf.d $PHP_INI_DIR/conf.d
+
+# Configure Git
+RUN git config --global user.email "email@email.com" \
+    && git config --global user.name "User Name"
+
 
 WORKDIR /var/www
-
-USER ${USER}
