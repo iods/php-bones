@@ -11,8 +11,8 @@ quickly replicate an environment to test or develop PHP in.
 
 Facts
 -----
-  * Version 0.2.0
-  * [Repository on Github]()
+  * Version 000.1.1
+  * [Repository on Github](https://github.com/iods/php-bones)
   
 
 Getting Started
@@ -26,17 +26,15 @@ Getting Started
 ### Installation
 
 ```sh
-$ git clone [repo]
-$ make up
+$ git clone https://github.com/iods/php-bones.git
+$ make test
 ```
 
 
 Development
 -----------
 
-The necessity of reliable documentation is both important to the developer responsible for
-the project and the maintainers taking it over. My goal is to support the gaps between
-building, revitalizing, and sharing the knowledge from discovery to release.
+Very basic. Building it.
 
 ### Structure
 
@@ -56,6 +54,11 @@ Support
 
 
 ### Change Log
+
+**[2022-01-05]**
+  * Addition of Nginx, PHP, and MySQL Docker images
+  * Composer support on install
+  * Addition of the `iods/php-sdk` PHP Framework
 
 **[2021-01-22]**
   * Addition of adarkstar/php-bones to the github iods/php-bones project
@@ -84,4 +87,4 @@ This project/code is released under [the MIT license](https://github.com/iods/ph
 Copyright
 ---------
 
-Copyright (c) 2021, Rye Miller
+Copyright (c) 2022, Rye Miller
