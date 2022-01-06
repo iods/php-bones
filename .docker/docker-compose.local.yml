@@ -1,0 +1,40 @@
+version: '3'
+
+services:
+
+  nginx:
+    build: containers/nginx
+    container_name: bones_nginx
+    volumes:
+      - ..:/var/www
+    ports:
+      - "8086:80"
+    depends_on:
+      - php
+
+  php:
+    build: containers/php
+    container_name: bones_php
+    volumes:
+      - ..:/var/www
+    depends_on:
+      - mysql
+    environment:
+      - USER=dev
+    env_file:
+      - config/env/application.env
+      - config/env/database.env
+      - config/env/xdebug.env
+
+  mysql:
+    build: containers/mysql
+    container_name: bones_mysql
+    volumes:
+      - db:/var/lib/mysql
+    ports:
+      - "3307:3306"
+    env_file:
+      - config/env/database.env
+
+volumes:
+  db:
