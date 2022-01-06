@@ -5,9 +5,20 @@
     "MIT"
   ],
   "require": {
-    "monolog/monolog": "2.0.*"
+    "php": ">=7.4",
+    "iods/php-sdk": "dev-develop"
   },
-  "require-dev": {
-
+  "config": {
+    "vendor-dir": "src/vendor"
+  },
+  "autoload": {
+    "psr-4": {
+      "Application\\": "src/app/code",
+      "Application\\Library\\": "src/app/lib"
+    },
+    "files": [
+      "src/etc/application.php",
+      "src/etc/configs.php"
+    ]
   }
 }
