@@ -5,9 +5,7 @@
     "MIT"
   ],
   "require": {
-    "monolog/monolog": "2.0.*"
-  },
-  "require-dev": {
-
+    "php": ">=7.4",
+    "iods/php-sdk": "000.1.0"
   }
 }
