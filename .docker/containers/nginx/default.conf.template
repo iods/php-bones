@@ -1,0 +1,32 @@
+upstream fpm_backend {
+    server php:9000;
+}
+
+server {
+    listen 80;
+    server_name ${SERVER_NAME};
+
+    charset utf-8;
+    index index.php;
+    root ${DOC_ROOT}/src;
+
+    location / {
+        try_files $uri $uri/ /index.php$args;
+    }
+
+    location = /favicon.ico { access_log off; log_not_found off; }
+    location = /robots.txt  { access_log off; log_not_found off; }
+
+    location ~ \.php$ {
+        fastcgi_split_path_info ^(.+\.php)(/.+)$;
+        fastcgi_pass fpm_backend;
+        fastcgi_index index.php;
+        fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+        fastcgi_param PATH_INFO $fastcgi_path_info;
+        include fastcgi_params;
+    }
+
+    location ~ /\.ht {
+        deny all;
+    }
+}
